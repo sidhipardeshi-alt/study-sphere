@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudySphere – Study Smarter. Achieve More.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a href="#home" class="logo">📚 StudySphere</a>
+  <button id="menuBtn" class="menu-btn" aria-label="Menu">☰</button>
+  <nav id="navLinks" class="links">
+    <a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#tasks">Tasks</a>
+    <a href="#timetable">Timetable</a><a href="#notes">Notes</a><a href="#progress">Progress</a><a href="#goals">Goals</a>
+  </nav>
+  <input id="globalSearch" class="search" type="search" placeholder="Search tasks, notes, goals…">
+  <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
+</header>
+
+<section id="searchResults" class="section hidden">
+  <h2>Search results</h2><div id="searchList" class="cards"></div>
+</section>
+
+<section id="home" class="hero">
+  <h1>Study Smarter. Achieve More.</h1>
+  <p>Organize your studies, manage your time, track your progress, and reach your academic goals with StudySphere.</p>
+  <div class="btns"><a href="#dashboard" class="btn">Get Started</a><a href="#features" class="btn ghost">Explore Features</a></div>
+</section>
+
+<section id="features" class="section">
+  <h2>Features</h2>
+  <div class="cards">
+    <div class="card feat"><span>🗓️</span><h3>Study Planner</h3><p>Build a weekly timetable that fits your routine.</p></div>
+    <div class="card feat"><span>✅</span><h3>Task Manager</h3><p>Track assignments by subject, priority and due date.</p></div>
+    <div class="card feat"><span>⏱️</span><h3>Study Timer</h3><p>Focus with 25-minute sessions and 5-minute breaks.</p></div>
+    <div class="card feat"><span>📝</span><h3>Notes</h3><p>Write, edit and search your study notes.</p></div>
+    <div class="card feat"><span>📈</span><h3>Progress Tracking</h3><p>See how far you are in every subject.</p></div>
+    <div class="card feat"><span>🎯</span><h3>Goal Tracking</h3><p>Set academic goals and tick them off.</p></div>
+  </div>
+</section>
+
+<section id="dashboard" class="section">
+  <h2>Dashboard</h2>
+  <div class="cards stats">
+    <div class="card stat"><small>Total Tasks</small><b id="stTotal">0</b></div>
+    <div class="card stat"><small>Completed Tasks</small><b id="stDone">0</b></div>
+    <div class="card stat"><small>Study Hours</small><b id="stHours">0</b></div>
+    <div class="card stat"><small>Current Goals</small><b id="stGoals">0</b></div>
+    <div class="card stat"><small>Overall Progress</small><b id="stProg">0%</b></div>
+  </div>
+  <div class="card"><div class="bar"><div id="overallBar" class="fill"></div></div></div>
+  <div class="card timer">
+    <h3>Study Timer</h3>
+    <div id="timerMode">Study session</div>
+    <div id="timerDisplay" class="time">25:00</div>
+    <div class="btns">
+      <button id="tStart" class="btn">Start</button><button id="tPause" class="btn ghost">Pause</button><button id="tReset" class="btn ghost">Reset</button>
+      <button id="tMode" class="btn ghost">Switch to break</button>
+    </div>
+    <p id="timerMsg" class="msg" role="status"></p>
+    <p>Sessions completed: <b id="sessionCount">0</b></p>
+  </div>
+</section>
+
+<section id="tasks" class="section">
+  <h2>Tasks</h2>
+  <form id="taskForm" class="card form" novalidate>
+    <input id="taskName" placeholder="Task name">
+    <input id="taskSubject" placeholder="Subject">
+    <select id="taskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select>
+    <input id="taskDue" type="date">
+    <button class="btn">Add task</button>
+    <p id="taskErr" class="err"></p>
+  </form>
+  <div class="filters" id="taskFilters">
+    <button class="chip active" data-f="all">All</button><button class="chip" data-f="pending">Pending</button>
+    <button class="chip" data-f="completed">Completed</button><button class="chip" data-f="high">High Priority</button>
+  </div>
+  <div id="taskList" class="cards"></div>
+</section>
+
+<section id="timetable" class="section">
+  <h2>Weekly Timetable</h2>
+  <form id="ttForm" class="card form" novalidate>
+    <input id="ttSubject" placeholder="Subject">
+    <select id="ttDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+    <input id="ttStart" type="time"><input id="ttEnd" type="time">
+    <button class="btn">Add session</button>
+    <p id="ttErr" class="err"></p>
+  </form>
+  <div id="ttGrid" class="cards week"></div>
+</section>
+
+<section id="notes" class="section">
+  <h2>Notes</h2>
+  <form id="noteForm" class="card form" novalidate>
+    <input id="noteTitle" placeholder="Note title">
+    <textarea id="noteBody" rows="3" placeholder="Write your note…"></textarea>
+    <button id="noteSave" class="btn">Save note</button>
+    <button type="button" id="noteCancel" class="btn ghost hidden">Cancel edit</button>
+    <p id="noteErr" class="err"></p>
+  </form>
+  <input id="noteSearch" class="field" type="search" placeholder="Search notes…">
+  <div id="noteList" class="cards"></div>
+</section>
+
+<section id="progress" class="section">
+  <h2>Progress</h2>
+  <div id="progressList" class="cards"></div>
+</section>
+
+<section id="goals" class="section">
+  <h2>Goals</h2>
+  <form id="goalForm" class="card form" novalidate>
+    <input id="goalName" placeholder="e.g. Complete 100 PYQs">
+    <input id="goalDate" type="date">
+    <button class="btn">Add goal</button>
+    <p id="goalErr" class="err"></p>
+  </form>
+  <div id="goalList" class="cards"></div>
+</section>
+
+<footer class="footer">
+  <div><h3>StudySphere</h3><p>Study smarter. Stay organized. Achieve your goals.</p></div>
+  <div><h4>Quick Links</h4><a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#tasks">Tasks</a></div>
+  <div><h4>Features</h4><a href="#timetable">Timetable</a><a href="#notes">Notes</a><a href="#goals">Goals</a></div>
+  <div><h4>Contact</h4><p>support@studysphere.app</p></div>
+  <p class="copy">© 2026 StudySphere. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
